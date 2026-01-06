@@ -449,6 +449,49 @@ if(false && !elig){
   var b3 = document.getElementById('resetTwoc');
   if(b3) b3.addEventListener('click', resetTwocTab);
   // ---- End reset buttons ----
+  // ---- Reset buttons (per tab) ----
+  function clearValue(id, value){
+    var el = document.getElementById(id);
+    if(!el) return;
+    if(el.type === 'checkbox') el.checked = !!value ? true : false;
+    else el.value = (value === undefined ? '' : value);
+  }
+
+  function resetCatTab(){
+    clearValue('sym', false);
+    clearValue('hrs', '');
+    clearValue('unk', false);
+    clearValue('pvr', '');
+    clearValue('aki', false);
+    clearValue('hyd', false);
+    clearValue('rise', false);
+    update();
+  }
+
+  function resetEligTab(){
+    ['e1','e2','e3','e4','e5','e6'].forEach(function(id){
+      clearValue(id, false);
+    });
+    update();
+  }
+
+  function resetTwocTab(){
+    clearValue('hrsPost', '');
+    clearValue('voided', 'unknown');
+    clearValue('sym2', false);
+    clearValue('pvr2', '');
+    update();
+  }
+
+  var b1 = document.getElementById('resetCat');
+  if(b1) b1.addEventListener('click', resetCatTab);
+
+  var b2 = document.getElementById('resetElig');
+  if(b2) b2.addEventListener('click', resetEligTab);
+
+  var b3 = document.getElementById('resetTwoc');
+  if(b3) b3.addEventListener('click', resetTwocTab);
+  // ---- End reset buttons ----
 
   document.addEventListener('input', update);
   document.addEventListener('change', update);
