@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Peri-operative Catheterisation and TWOC Decision Aid in Femoral and Pelvic Fracture Patients — v1.1.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
+.container { width: 100%; }
+.card { min-width: 0; }
+.split { flex-wrap: wrap; }
+@media (max-width: 480px){ body { padding: 14px; } }
+
+body { font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; background:#f4f6f8; margin:0; padding:24px;}
+.container { max-width:1000px; margin:auto;}
+.panel{max-width:1000px;margin:0 auto;}
+.stackwrap{max-width:760px;margin:0 auto;}
+
+
+h1 { font-size:1.6rem; margin:0 0 12px 0;}
+.tabs { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+.tab { padding:10px 12px; border-radius:999px; border:1px solid #b9d8ff; background:#eaf4ff; cursor:pointer; font-weight:700; color:#0b2a4a; }
+.tab.active { background:#cfe8ff; border-color:#9dcfff; }
+.card { background:#fff; border-radius:14px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:16px;}
+.section { display:none;}
+.section.active { display:block;}
+label { display:block; margin:8px 0; color:#111827; }
+input[type=number], select { width:100%; padding:8px; border-radius:10px; border:1px solid #d7dbe0; box-sizing:border-box; }
+.badge { display:inline-block; padding:6px 12px; border-radius:999px; font-size:0.75rem; font-weight:800; letter-spacing:0.2px;}
+.ok { background:#d1fae5; color:#065f46;}
+.warn { background:#fef3c7; color:#92400e;}
+.stop { background:#fee2e2; color:#991b1b;}
+ul { padding-left:18px; margin:8px 0;}
+li { margin:4px 0;}
+.audit { font-size:0.75rem; border:1px dashed #cfd6dd; padding:8px; border-radius:10px; margin-top:8px; color:#374151;}
+.disclaimer-text { color:#6b7280; font-size:0.78rem; line-height:1.35; }
+.split { display:flex; gap:16px; align-items:flex-start; }
+.split > .card { flex:1; }
+@media (max-width: 900px){ .split { flex-direction:column; } }
+.smallhead { margin:10px 0 6px 0; font-size:1rem; }
+hr { border:none; height:1px; background:#eef0f3; margin:12px 0; }
+
+.stop-disabled{opacity:0.4;pointer-events:none;}
+
+
+
+@media (max-width: 520px){
+  .tabs{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:8px;
+  }
+  .tab{
+    width:100%;
+    border-radius:12px;
+    padding:10px 6px;
+    font-size:0.85rem;
+    text-align:center;
+    white-space:normal;
+    line-height:1.1;
+  }
+}
+
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>Peri-operative Catheterisation and TWOC Decision Aid in Femoral and Pelvic Fracture Patients</h1>
+
+  <div class="card" style="border-left:4px solid #9dcfff;">
+    <div class="disclaimer-text">
+      <b>Nursing decision support tool.</b>
+      This tool is intended to support nursing decision-making only.
+      It <b>must be used alongside local policy and clinical judgement</b>.
+      Escalate to senior medical staff or urology where uncertainty, complications, repeated failure, or patient instability occur.
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-target="cat" type="button">Catheterisation</button>
+    <button class="tab" data-target="elig" type="button">TWOC eligibility</button>
+    <button class="tab" data-target="twoc" type="button">TWOC outcome</button>
+  </div>
+
+  <!-- ================= CATHTER ================= -->
+  <div id="cat" class="section active">
+
+<div class="card" style="border-left:5px solid #dc2626; background:#fef2f2;">
+  <div style="font-weight:800; color:#991b1b; margin-bottom:6px;">Caution</div>
+  <ul style="margin:0; padding-left:18px; color:#7f1d1d; font-size:0.9rem;">
+    <li>Please <b>do not catheterise without senior input</b> if there is <b>blood visible at the urethral meatus</b>.</li>
+    <li>Please <b>do not catheterise without senior input</b> if <b>urethral injury is suspected</b>, particularly with pelvic fractures.</li>
+    <li>If <b>macroscopic haematuria occurs</b> during or after catheterisation, <b>stop and seek senior input</b>.</li>
+  </ul>
+</div>
+
+<div class="card" style="border-left:5px solid #dc2626; background:#fff5f5; margin-top:8px;">
+  <div style="font-weight:800; color:#991b1b; margin-bottom:6px;">
+    DO NOT PROCEED FURTHER WITH CATHETERISATION if there is:
+  </div>
+  <ul style="margin:0; padding-left:18px; color:#7f1d1d; font-size:0.9rem;">
+    <li>Significant pain or resistance during the procedure</li>
+    <li>Patient distressed or unstable during the procedure</li>
+  </ul>
+</div>
+
+<div class="disclaimer-text" style="margin:6px 0 12px 0; font-weight:700;">Tick or fill all relevant boxes.</div>
+
+<div class="card">
+        <h3>Catheterisation inputs (SOP v1.1 §3)</h3>
+
+        <label><input type="checkbox" id="sym"> Symptoms suggest retention</label>
+        <label>Hours since last urine <input type="number" id="hrs" min="0" step="1" placeholder="e.g. 7"></label>
+        <label><input type="checkbox" id="unk"> Time since last urine unknown</label>
+        <label>Bladder scan / PVR (mL) <input type="number" id="pvr" min="0" step="1" placeholder="e.g. 480"></label>
+
+        <hr>
+
+        <h4 class="smallhead">Overriding indications (SOP v1.1 §3.3C)</h4>
+        <label><input type="checkbox" id="aki"> AKI / rising creatinine</label>
+        <label><input type="checkbox" id="hyd"> Hydronephrosis</label>
+        <label><input type="checkbox" id="rise"> Rapidly rising volumes</label>
+
+        <hr>
+
+        <h4 class="smallhead">Attempts / STOP triggers (SOP v1.1 §3.4)</h4>
+
+      </div>
+
+      <div class="card">
+        <h3>Recommendation</h3>
+        <span id="catBadge" class="badge warn">REASSESS</span>
+        <p id="catTitle" style="font-weight:700; margin:10px 0 6px 0;"></p>
+        <div style="color:#6b7280; font-size:0.85rem; font-weight:700;">Rationale</div>
+        <ul id="catWhy"></ul>
+        <div style="color:#6b7280; font-size:0.85rem; font-weight:700; margin-top:10px;">Actions</div>
+        <ul id="catAct"></ul>
+        <div class="audit" id="catAudit"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TWOC ELIG ================= -->
+  <div id="elig" class="section"><div class="panel">
+<div class="disclaimer-text" style="margin:6px 0 12px 0; font-weight:700;">Tick all applicable boxes.</div>
+
+    <div class="stackwrap">
+<div class="card">
+      <h3>TWOC eligibility checklist (SOP v1.1 §4.1)</h3>
+      <label><input type="checkbox" id="e1"> Haemodynamically stable</label>
+      <label><input type="checkbox" id="e2"> No strict hourly urine output</label>
+      <label><input type="checkbox" id="e3"> Pain controlled</label>
+      <label><input type="checkbox" id="e4"> Constipation assessed/managed (bowel opening is not a strict requirement for TWOC)</label>
+      <label><input type="checkbox" id="e5"> Transfers/mobility available</label>
+      <label><input type="checkbox" id="e6"> Daytime staffing + scanner</label>
+    </div>
+
+    <div class="card">
+      <h3>Eligibility result</h3>
+      <span id="eligBadge" class="badge warn">NOT ELIGIBLE</span>
+      <p id="eligText" style="margin-top:10px;"></p>
+</div>
+</div></div></div>
+
+  <!-- ================= TWOC OUTCOME ================= -->
+  <div id="twoc" class="section"><div class="panel">
+<div class="disclaimer-text" style="margin:6px 0 12px 0; font-weight:700;">Tick or fill all relevant boxes and select appropriately.</div>
+
+    <div class="stackwrap">
+<div class="card">
+      <h3>TWOC outcome assessment (SOP v1.1 §5.1–§5.2)</h3>
+
+      <label>Hours since catheter removal <input type="number" id="hrsPost" min="0" step="0.5" placeholder="e.g. 4"></label>
+
+      <label>Voided?
+        <select id="voided">
+          <option value="unknown">Unknown</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </label>
+
+      <label><input type="checkbox" id="sym2"> Significant discomfort/distress</label>
+      <label><span id="pvr2Label">Bladder scan volume / PVR (mL)</span> <input type="number" id="pvr2" min="0" step="1" placeholder="e.g. 300"></label>
+    </div>
+
+    <div class="card">
+      <h3>TWOC Outcome – Interpretation & Action</h3>
+      <span id="twocBadge" class="badge warn">REASSESS</span>
+      <p id="twocTitle" style="font-weight:700; margin:10px 0 6px 0;"></p>
+      <div style="color:#6b7280; font-size:0.85rem; font-weight:700;">Rationale</div>
+      <ul id="twocWhy"></ul>
+      <div style="color:#6b7280; font-size:0.85rem; font-weight:700; margin-top:10px;">Actions</div>
+      <ul id="twocAct"></ul>
+      <div class="audit" id="twocAudit">
+</div>
+</div></div></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  function num(id){
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var v = el.value;
+    if(v === "" || v === null || typeof v === "undefined") return null;
+    var n = Number(v);
+    if(!isFinite(n) || n < 0) return null;
+    return n;
+  }
+  function chk(id){
+    var el = document.getElementById(id);
+    return !!(el && el.checked);
+  }
+
+  function setCat(badge, cls, title, why, act){
+    var b=document.getElementById('catBadge');
+    var t=document.getElementById('catTitle');
+    var w=document.getElementById('catWhy');
+    var a=document.getElementById('catAct');
+    b.textContent=badge;
+    b.className='badge ' + cls;
+    t.textContent=title;
+    w.innerHTML=why.map(function(x){ return '<li>'+x+'</li>'; }).join('');
+    a.innerHTML=act.map(function(x){ return '<li>'+x+'</li>'; }).join('');
+  }
+
+  function setTwoc(badge, cls, title, why, act){
+    var b=document.getElementById('twocBadge');
+    var t=document.getElementById('twocTitle');
+    var w=document.getElementById('twocWhy');
+    var a=document.getElementById('twocAct');
+    b.textContent=badge;
+    b.className='badge ' + cls;
+    t.textContent=title;
+    w.innerHTML=why.map(function(x){ return '<li>'+x+'</li>'; }).join('');
+    a.innerHTML=act.map(function(x){ return '<li>'+x+'</li>'; }).join('');
+  }
+
+  function update(){
+    // Catheter
+    var sym=chk('sym'), hrs=num('hrs'), unk=chk('unk'), pvr=num('pvr');
+    var aki=chk('aki'), hyd=chk('hyd'), rise=chk('rise');
+
+    var badge='REASSESS', cls='warn', title='—', why=[], act=[];
+
+    // Overriding indications take precedence (SOP v1.1 §3.3C)
+    if(aki || hyd || rise){
+      badge='CONSIDER CATHETERISATION / DISCUSS WITH SENIOR'; cls='ok';
+      title='Overriding indication present';
+      why=[
+        'One or more overriding indications present (AKI/rising creatinine, hydronephrosis, or rapidly rising volumes).',
+        'Per SOP v1.1 §3.3C, standard prerequisites and volume thresholds may be overridden.'
+      ];
+      act=[
+        'Consider catheterisation and discuss with a senior clinician.',
+        'If no recent bladder scan is available, perform bladder scan when feasible and document findings.'
+      ];
+    } else if(!(sym || unk || (hrs !== null && hrs >= 6))){
+      badge='REASSESS'; cls='warn';
+      title='Prerequisites not met';
+      why=['SOP v1.1 §3.2 prerequisites not met (symptoms OR ≥6h since last urine OR time unknown).'];
+      act=['Encourage toileting/commode and reassess.'];
+    } else if(pvr === null){
+      badge='REASSESS'; cls='warn';
+      title='Bladder scan required';
+      why=['Objective bladder volume (PVR) is required to apply SOP thresholds.'];
+      act=['Perform bladder scan and enter volume.'];
+    } else if(sym){
+      if(pvr >= 300){
+        badge='CATHETERISE'; cls='ok';
+        title='Symptomatic retention';
+        why=['Symptoms + PVR ≥300 mL (SOP v1.1 §3.3A).'];
+        act=['Catheterise per local policy; document findings and plan daily review / TWOC when eligible.'];
+      } else {
+        badge='DO NOT CATHETERISE'; cls='warn';
+        title='Symptoms with low volume';
+        why=['PVR <300 mL (SOP v1.1 §3.3A) — do not attribute symptoms to retention without supportive volume.'];
+        act=['Consider other causes (pain, delirium, constipation, infection, medications) and reassess.'];
+      }
+    } else {
+      if(pvr >= 500){
+        badge='CATHETERISE'; cls='ok';
+        title='Asymptomatic ≥500 mL';
+        why=['Asymptomatic PVR ≥500 mL (SOP v1.1 §3.3B).'];
+        act=['Catheterise per local policy; review daily and plan TWOC when eligible.'];
+      } else if(pvr >= 300){
+        badge='OBSERVE / RESCAN'; cls='warn';
+        title='Asymptomatic 300–499 mL';
+        why=['Observe and repeat bladder scan (SOP v1.1 §3.3B).'];
+        act=['Encourage toileting; repeat scan after observation interval or sooner if symptoms develop.'];
+      } else {
+        badge='NO CATHETER'; cls='warn';
+        title='Asymptomatic <300 mL';
+        why=['No catheterisation indicated (SOP v1.1 §3.3B).'];
+        act=['Continue monitoring and reassess if symptoms develop or time threshold reached.'];
+      }
+    }
+
+    setCat(badge, cls, title, why, act);
+    document.getElementById('catAudit').textContent =
+      'Audit: symptoms ' + (sym?'Yes':'No') +
+      '; hrs since last urine ' + (hrs===null?'—':hrs) +
+      '; time unknown ' + (unk?'Yes':'No') +
+      '; PVR ' + (pvr===null?'—':pvr) +
+      '; overriding indication ' + ((aki||hyd||rise)?'Yes':'No') +
+      '.';
+
+    // Eligibility
+    var elig = chk('e1') && chk('e2') && chk('e3') && chk('e4') && chk('e5') && chk('e6');
+    var eb=document.getElementById('eligBadge');
+    eb.textContent = elig ? 'ELIGIBLE' : 'NOT ELIGIBLE';
+    eb.className = 'badge ' + (elig ? 'ok' : 'warn');
+    document.getElementById('eligText').textContent = elig
+      ? 'All SOP v1.1 §4.1 criteria met — proceed to TWOC.'
+      : 'One or more eligibility criteria missing (SOP v1.1 §4.1).';
+
+    // TWOC outcome
+    var hrsPost=num('hrsPost');
+    var voidedEl=document.getElementById('voided');
+    var voided = voidedEl ? voidedEl.value : 'unknown';
+    // TWOC input label: avoid 'post-void residual' wording when no void
+    var pvr2LabelEl=document.getElementById('pvr2Label');
+    if(pvr2LabelEl){
+      pvr2LabelEl.textContent = (voided === 'yes') ? 'Post-void residual (mL)' : 'Bladder scan volume (mL)';
+    }
+
+    var sym2=chk('sym2');
+    var pvr2=num('pvr2');
+
+    var tBadge='REASSESS', tCls='warn', tTitle='—', tWhy=[], tAct=[];
+
+    // Eligibility should not block outcome once TWOC started (SOP v1.1 §5)
+if(false && !elig){
+      tBadge='NOT ELIGIBLE'; tCls='warn';
+      tTitle='Not eligible for TWOC';
+      tWhy=['Eligibility criteria not met (SOP v1.1 §4.1).'];
+      tAct=['Address eligibility criteria first.'];
+    } else if((voided === 'unknown' || (voided === 'no' && hrsPost !== null && hrsPost >= 6)) && pvr2 === null){
+      tBadge='REASSESS'; tCls='warn';
+      tTitle='Bladder scan required';
+      tWhy=['SOP v1.1 §5.1: if no void by 6 hours or voiding status unknown, bladder scan is required.'];
+      tAct=['Perform bladder scan and enter PVR.'];
+    } else if((pvr2 !== null && pvr2 >= 300) || (voided === 'yes' && sym2 && pvr2 !== null && pvr2 >= 200)){
+      tBadge='TWOC unsuccessful'; tCls='stop';
+      tTitle='TWOC unsuccessful';
+      tWhy=['Meets SOP v1.1 §5.1 failure criteria.'];
+      tAct=[
+        'Drain bladder.',
+        'Consider intermittent catheterisation for up to 24–48 hours (max 3 episodes) if recovery expected and staffing allows (SOP v1.1 §5.2).',
+        'If repeated IC required or PVR remains >300 mL, convert to IDC and seek senior review (SOP v1.1 §5.2).'
+      ];
+    } else if(voided === 'yes' && pvr2 !== null && pvr2 < 200){
+      tBadge='TWOC successful'; tCls='ok';
+      tTitle='TWOC successful';
+      tWhy=['Voided with PVR <200 mL (SOP v1.1 §5.1).'];
+      tAct=['Continue observation; rescan only if symptoms recur or concerns arise.'];
+    } else {
+      tBadge='Continue observation'; tCls='ok';
+      tTitle='Continue observation';
+      tWhy=['Continue observation up to 6 hours; assess per SOP v1.1 §5.1.'];
+      tAct=['If no void by 6 hours or voiding status becomes unclear, scan and apply thresholds.'];
+    }
+
+    setTwoc(tBadge, tCls, tTitle, tWhy, tAct);
+    document.getElementById('twocAudit').textContent =
+      'Audit: eligible ' + (elig?'Yes':'No') +
+      '; hrs since removal ' + (hrsPost===null?'—':hrsPost) +
+      '; voided ' + voided +
+      '; symptomatic ' + (sym2?'Yes':'No') +
+      '; ' + (voided==='yes' ? 'PVR ' : 'Bladder scan volume ') + (pvr2===null?'—':pvr2) + '.';
+  }
+
+  // Tab handling (robust; no string matching)
+  function activate(targetId){
+    var sections=document.querySelectorAll('.section');
+    for(var i=0;i<sections.length;i++){ sections[i].classList.remove('active'); }
+    var tabs=document.querySelectorAll('.tab');
+    for(var j=0;j<tabs.length;j++){ tabs[j].classList.remove('active'); }
+    var sec=document.getElementById(targetId);
+    if(sec) sec.classList.add('active');
+    var btn=document.querySelector('.tab[data-target="'+targetId+'"]');
+    if(btn) btn.classList.add('active');
+  }
+
+  var tabButtons=document.querySelectorAll('.tab');
+  for(var k=0;k<tabButtons.length;k++){
+    tabButtons[k].addEventListener('click', function(evt){
+      var tgt=this.getAttribute('data-target');
+      activate(tgt);
+    });
+  }
+
+  document.addEventListener('input', update);
+  document.addEventListener('change', update);
+  update();
+})();
+</script>
+
+<div style="margin-top:32px; padding-top:12px; border-top:1px solid #e5e7eb; font-size:0.75rem; color:#6b7280; text-align:center;">
+© 2026 Dr Prabhath Fernando MBBS MD FRCP.  
+Peri-operative Catheterisation and TWOC Decision Aid in Femoral and Pelvic Fracture Patients – Nursing decision support tool.  
+All rights reserved. This tool may be used for clinical care and education but may not be modified, redistributed, or incorporated into commercial products without permission.  
+Use alongside local policy and clinical judgement.
+</div>
+
+</body>
+</html>
