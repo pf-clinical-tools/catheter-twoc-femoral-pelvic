@@ -61,6 +61,17 @@ hr { border:none; height:1px; background:#eef0f3; margin:12px 0; }
     line-height:1.1;
   }
 }
+.reset-btn{
+  margin-top: 10px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  border: 1px solid #d7dbe0;
+  background: #f9fafb;
+  cursor: pointer;
+  font-weight: 700;
+}
+.reset-btn:hover{ background:#f3f4f6; }
 
 </style>
 </head>
@@ -107,6 +118,7 @@ hr { border:none; height:1px; background:#eef0f3; margin:12px 0; }
 </div>
 
 <div class="disclaimer-text" style="margin:6px 0 12px 0; font-weight:700;">Tick or fill all relevant boxes.</div>
+<button class="reset-btn" type="button" id="resetCat">Reset this tab</button>
 
 <div class="card">
         <h3>Catheterisation inputs (SOP v1.1 §3)</h3>
@@ -145,6 +157,7 @@ hr { border:none; height:1px; background:#eef0f3; margin:12px 0; }
   <!-- ================= TWOC ELIG ================= -->
   <div id="elig" class="section"><div class="panel">
 <div class="disclaimer-text" style="margin:6px 0 12px 0; font-weight:700;">Tick all applicable boxes.</div>
+<button class="reset-btn" type="button" id="resetElig">Reset this tab</button>
 
     <div class="stackwrap">
 <div class="card">
@@ -167,6 +180,7 @@ hr { border:none; height:1px; background:#eef0f3; margin:12px 0; }
   <!-- ================= TWOC OUTCOME ================= -->
   <div id="twoc" class="section"><div class="panel">
 <div class="disclaimer-text" style="margin:6px 0 12px 0; font-weight:700;">Tick or fill all relevant boxes and select appropriately.</div>
+<button class="reset-btn" type="button" id="resetTwoc">Reset this tab</button>
 
     <div class="stackwrap">
 <div class="card">
@@ -394,6 +408,47 @@ if(false && !elig){
       activate(tgt);
     });
   }
+  // ---- Reset buttons (per tab) ----
+  function clearValue(id, value){
+    var el = document.getElementById(id);
+    if(!el) return;
+    if(el.type === 'checkbox') el.checked = !!value ? true : false;
+    else el.value = (value === undefined ? '' : value);
+  }
+
+  function resetCatTab(){
+    clearValue('sym', false);
+    clearValue('hrs', '');
+    clearValue('unk', false);
+    clearValue('pvr', '');
+    clearValue('aki', false);
+    clearValue('hyd', false);
+    clearValue('rise', false);
+    update();
+  }
+
+  function resetEligTab(){
+    ['e1','e2','e3','e4','e5','e6'].forEach(function(id){ clearValue(id, false); });
+    update();
+  }
+
+  function resetTwocTab(){
+    clearValue('hrsPost', '');
+    clearValue('voided', 'unknown'); // reset dropdown
+    clearValue('sym2', false);
+    clearValue('pvr2', '');
+    update();
+  }
+
+  var b1 = document.getElementById('resetCat');
+  if(b1) b1.addEventListener('click', resetCatTab);
+
+  var b2 = document.getElementById('resetElig');
+  if(b2) b2.addEventListener('click', resetEligTab);
+
+  var b3 = document.getElementById('resetTwoc');
+  if(b3) b3.addEventListener('click', resetTwocTab);
+  // ---- End reset buttons ----
 
   document.addEventListener('input', update);
   document.addEventListener('change', update);
