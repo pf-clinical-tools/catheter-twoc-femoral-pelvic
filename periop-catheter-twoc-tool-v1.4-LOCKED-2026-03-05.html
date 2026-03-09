@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Peri-operative Catheterisation & TWOC Decision Aid (Femoral/Pelvic Fracture)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<!-- TOOL_MARKER_PERIOP_CATH_TWOC_V1_4_LOCKED_2026_03_05 -->
+
+<style>
+  :root{
+    --bg:#f4f6f8;
+    --card:#ffffff;
+    --text:#111827;
+    --muted:#6b7280;
+    --border:#d7dbe0;
+    --blue:#0b2a4a;
+    --amber-bg:#fef3c7;
+    --amber-tx:#92400e;
+    --green-bg:#d1fae5;
+    --green-tx:#065f46;
+    --red-bg:#fee2e2;
+    --red-tx:#991b1b;
+    --blue-bg:#eff6ff;
+    --blue-tx:#1d4ed8;
+  }
+
+  *{ box-sizing:border-box; }
+  html, body{ overflow-x:hidden; }
+  body{
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    background:var(--bg);
+    margin:0;
+    padding:24px;
+    color:var(--text);
+    line-height:1.5;
+  }
+  @media (max-width: 480px){ body{ padding:14px; } }
+
+  .container{ max-width:1000px; margin:0 auto; }
+  h1{ font-size:1.6rem; margin:0 0 12px 0; }
+
+  .card{
+    background:var(--card);
+    border-radius:14px;
+    padding:16px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom:16px;
+  }
+
+  .disclaimer{
+    border-left:4px solid #9dcfff;
+  }
+  .disclaimer p{ margin:6px 0; color:var(--muted); font-size:0.86rem; }
+
+  .tabs{ display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+  .tab{
+    padding:10px 12px;
+    border-radius:999px;
+    border:1px solid #b9d8ff;
+    background:#eaf4ff;
+    cursor:pointer;
+    font-weight:800;
+    color:var(--blue);
+    transition:transform .05s ease, background .15s ease;
+  }
+  .tab:hover{ background:#dbeafe; }
+  .tab:active{ transform:scale(.98); }
+  .tab.active{ background:#cfe8ff; border-color:#9dcfff; }
+
+  @media (max-width: 520px){
+    .tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .tab{
+      width:100%;
+      border-radius:12px;
+      padding:10px 6px;
+      font-size:0.85rem;
+      text-align:center;
+      white-space:normal;
+      line-height:1.1;
+    }
+  }
+
+  .section{ display:none; }
+  .section.active{ display:block; }
+
+  label{ display:block; margin:10px 0; }
+  .help{ color:var(--muted); font-size:0.82rem; margin-top:4px; }
+
+  input[type="number"], select{
+    width:100%;
+    padding:10px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    margin-top:6px;
+    font-size:1rem;
+    background:#fff;
+  }
+
+  hr{ border:none; height:1px; background:#eef0f3; margin:12px 0; }
+
+  .split{ display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; }
+  .split > .col{ flex:1; min-width:280px; }
+  @media (max-width: 900px){ .split{ flex-direction:column; } }
+
+  .badge{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:0.78rem;
+    font-weight:900;
+    letter-spacing:0.2px;
+    border:1px solid rgba(0,0,0,0.06);
+  }
+  .b-amber{ background:var(--amber-bg); color:var(--amber-tx); }
+  .b-green{ background:var(--green-bg); color:var(--green-tx); }
+  .b-red{ background:var(--red-bg); color:var(--red-tx); }
+  .b-blue{ background:var(--blue-bg); color:var(--blue-tx); }
+
+  ul{ padding-left:18px; margin:8px 0; }
+  li{ margin:4px 0; }
+
+  .audit{
+    font-size:0.78rem;
+    border:1px dashed #cfd6dd;
+    padding:10px;
+    border-radius:12px;
+    margin-top:10px;
+    color:#374151;
+    background:#fafafa;
+  }
+
+  .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+  .btn{
+    padding:10px 12px;
+    font-size:0.9rem;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:#f9fafb;
+    cursor:pointer;
+    font-weight:800;
+    transition:transform .05s ease, background .15s ease, box-shadow .15s ease;
+    box-shadow:0 1px 2px rgba(0,0,0,0.04);
+  }
+  .btn:hover{ background:#f3f4f6; }
+  .btn:active{
+    transform:scale(.98);
+    background:#e5e7eb;
+    box-shadow:inset 0 2px 4px rgba(0,0,0,0.08);
+  }
+  .btn.copied{
+    background:var(--green-bg) !important;
+    color:var(--green-tx);
+    border-color:#86efac;
+  }
+
+  .callout{
+    border-radius:14px;
+    padding:14px;
+    border:1px solid rgba(0,0,0,0.06);
+    margin-bottom:12px;
+  }
+  .callout h3{ margin:0 0 6px 0; font-size:1.05rem; }
+  .callout p{ margin:6px 0; font-size:0.92rem; }
+
+  .callout-amber{ background:#fff7ed; border-left:6px solid #fb923c; }
+  .callout-red{ background:#fef2f2; border-left:6px solid #dc2626; }
+  .callout-blue{ background:#eff6ff; border-left:6px solid #60a5fa; }
+
+  .contextBanner{
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-left:6px solid #94a3b8;
+    border-radius:14px;
+    padding:12px 14px;
+    margin-bottom:12px;
+  }
+  .contextBanner.amber{ background:#fffbeb; border-left-color:#f59e0b; }
+  .contextBanner.blue{ background:#eff6ff; border-left-color:#3b82f6; }
+
+  .mutedHead{ color:var(--muted); font-size:0.82rem; font-weight:900; margin-top:6px; }
+
+  textarea.snip{
+    width:100%;
+    min-height:150px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    padding:10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size:0.86rem;
+    background:#fcfcfd;
+    resize:vertical;
+  }
+
+  details summary{ cursor:pointer; font-weight:900; }
+  .tiny{ font-size:0.78rem; color:var(--muted); }
+
+  .foot{
+    margin-top:24px;
+    padding-top:12px;
+    border-top:1px solid #e5e7eb;
+    font-size:0.78rem;
+    color:var(--muted);
+    text-align:center;
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>Peri-operative Catheterisation and TWOC Decision Aid (Femoral and Pelvic Fracture Patients)</h1>
+
+  <div class="card disclaimer">
+    <p><b>Nursing decision support tool.</b> Use alongside local policy and clinical judgement. Escalate to a <b>senior doctor/practitioner or urology</b> where uncertainty, complications, repeated failure, macroscopic haematuria, suspected urethral injury, or patient instability occur.</p>
+    <p class="tiny">This tool uses pragmatic, orthogeriatric hip/pelvic fracture–focused thresholds intended to standardise bedside decision-making; confirm against local SOP where available.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-target="cat" type="button">Catheterisation</button>
+    <button class="tab" data-target="elig" type="button">TWOC eligibility</button>
+    <button class="tab" data-target="twoc" type="button">TWOC outcome</button>
+  </div>
+
+  <!-- ========================= CATHETERISATION TAB ========================= -->
+  <div id="cat" class="section active">
+
+    <div class="card callout callout-red">
+      <h3>Caution</h3>
+      <ul style="margin:0; padding-left:18px;">
+        <li><b>Do not catheterise without senior input</b> if there is <b>blood visible at the urethral meatus</b> or <b>urethral injury is suspected</b> (particularly with pelvic fractures).</li>
+        <li>If <b>macroscopic haematuria occurs</b> during/after catheterisation, <b>stop</b> and seek <b>senior doctor/practitioner or urology</b> input.</li>
+        <li>If the patient is on <b>therapeutic anticoagulation</b> or has known <b>coagulopathy</b>, seek <b>senior review</b> before catheterisation.</li>
+      </ul>
+    </div>
+
+    <div class="card callout callout-red">
+      <h3>STOP rule</h3>
+      <p><b>Do NOT proceed with catheterisation if:</b></p>
+      <ul>
+        <li>Significant pain occurs</li>
+        <li>Resistance is encountered</li>
+        <li>The patient becomes distressed</li>
+        <li>The patient becomes clinically unstable</li>
+      </ul>
+      <p><b>Stop immediately and escalate to a senior doctor/practitioner or urology.</b></p>
+    </div>
+
+    <div class="card callout callout-blue">
+      <h3>Screening for pain and delirium</h3>
+      <div class="help">These questions set the assessment context and generate the recommendation shown above the bladder pathway.</div>
+
+      <label>
+        Is the patient <b>delirious, confused or agitated</b>?
+        <select id="rsDelir">
+          <option value="unknown">Unknown</option>
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+        <div class="help">Think: new confusion, agitation, fluctuating alertness, inattention.</div>
+      </label>
+
+      <label>
+        Is the patient <b>in pain or appears to be in pain</b>?
+        <select id="rsPain">
+          <option value="unknown">Unknown</option>
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+        <div class="help">If unsure, leave as “Unknown”. The tool will still guide safe next steps.</div>
+      </label>
+
+      <label>
+        <b>Able to reliably report urinary symptoms</b> (No cognitive impairment, delirium, aphasia)
+        <select id="rsAble">
+          <option value="unknown">Unknown</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </label>
+
+      <label>
+        Abbey Pain Scale (optional, if relevant)
+        <input type="number" id="abbey" min="0" max="18" step="1" placeholder="0–18 (optional)" />
+      </label>
+
+      <details>
+        <summary>Abbey Pain Scale interpretation (quick guide)</summary>
+        <div class="help" style="margin-top:10px;">
+          <ul>
+            <li><b>0</b> = No pain</li>
+            <li><b>1–3</b> = Mild pain</li>
+            <li><b>4–7</b> = Moderate pain</li>
+            <li><b>8–13</b> = Severe pain</li>
+            <li><b>14+</b> = Very severe pain</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <div id="rsImmediate" class="card callout callout-amber">
+      <h3>Context and next step</h3>
+      <p id="rsImmediateText" style="margin:8px 0;"></p>
+      <div class="mutedHead">Actions now</div>
+      <ul id="rsImmediateActs"></ul>
+    </div>
+
+    <div id="contextBanner" class="contextBanner blue">
+      <b id="contextTitle">Standard Bladder Assessment Pathway</b>
+      <div id="contextText" class="help" style="margin-top:6px;">No pain/delirium trigger identified. Proceed with standard bladder assessment.</div>
+    </div>
+
+    <div id="catAlgoWrap" class="card">
+      <div class="split">
+        <div class="col">
+          <h3>Bladder assessment pathway</h3>
+
+          <label>
+            Sex
+            <select id="sex">
+              <option value="unknown">Unknown</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+          </label>
+
+          <label>
+            <input type="checkbox" id="signs" />
+            <b>Signs suggest retention</b> (e.g. suprapubic discomfort/fullness, dribbling, repeatedly asking to use toilet, new incontinence)
+          </label>
+
+          <label>
+            Hours since last urine
+            <input type="number" id="hrs" min="0" step="1" placeholder="e.g. 7" />
+          </label>
+
+          <label>
+            <input type="checkbox" id="unk" />
+            Time since last urine <b>unknown</b>
+          </label>
+
+          <label>
+            Bladder scan volume / PVR (mL)
+            <input type="number" id="pvr" min="0" step="1" placeholder="e.g. 480" />
+          </label>
+
+          <hr />
+
+          <h4 style="margin:0 0 6px 0;">Senior-only override flags</h4>
+          <div class="help">If any are ticked, <b>thresholds may be overridden only with senior review</b>.</div>
+
+          <label><input type="checkbox" id="aki" /> AKI / rising creatinine</label>
+          <label><input type="checkbox" id="hyd" /> Hydronephrosis</label>
+          <label><input type="checkbox" id="rise" /> Rapidly rising volumes / escalating concern</label>
+
+          <div class="ctaRow">
+            <button class="btn" type="button" id="resetCat">Reset this tab</button>
+          </div>
+        </div>
+
+        <div class="col" role="status" aria-live="polite">
+          <h3>Recommendation</h3>
+          <span id="catBadge" class="badge b-amber">REASSESS</span>
+          <p id="catTitle" style="font-weight:900; margin:10px 0 6px 0;">—</p>
+
+          <div class="mutedHead">Rationale</div>
+          <ul id="catWhy"></ul>
+
+          <div class="mutedHead" style="margin-top:10px;">Actions</div>
+          <ul id="catAct"></ul>
+
+          <div class="audit" id="catAudit"></div>
+
+          <hr />
+
+          <h4 style="margin:0 0 8px 0;">Copy-paste documentation snippet</h4>
+          <textarea class="snip" id="catSnippet" readonly></textarea>
+          <div class="ctaRow">
+            <button class="btn" type="button" id="copyCat" aria-label="Copy catheterisation documentation snippet">Copy snippet</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================= TWOC ELIGIBILITY TAB ========================= -->
+  <div id="elig" class="section">
+
+    <div class="card">
+      <h3>TWOC eligibility checklist</h3>
+      <div class="help">These criteria reflect pragmatic safety requirements: attempt TWOC only when monitoring and re-intervention are feasible.</div>
+
+      <label><input type="checkbox" id="e1" /> Haemodynamically stable</label>
+      <label><input type="checkbox" id="e2" /> No requirement for strict hourly urine output</label>
+      <label><input type="checkbox" id="e3" /> Pain controlled</label>
+      <label><input type="checkbox" id="e4" /> Constipation assessed/managed (bowel opening is <b>not</b> a strict requirement)</label>
+      <label><input type="checkbox" id="e5" /> Transfers/mobility available (commode/toilet access)</label>
+      <label><input type="checkbox" id="e6" /> Daytime staffing + bladder scanner available</label>
+
+      <div class="ctaRow">
+        <button class="btn" type="button" id="resetElig">Reset this tab</button>
+      </div>
+    </div>
+
+    <div class="card" role="status" aria-live="polite">
+      <h3>Eligibility result</h3>
+      <span id="eligBadge" class="badge b-amber">NOT ELIGIBLE</span>
+      <p id="eligText" style="margin-top:10px;">One or more eligibility criteria missing.</p>
+
+      <hr />
+
+      <h4 style="margin:0 0 8px 0;">Copy-paste documentation snippet</h4>
+      <textarea class="snip" id="eligSnippet" readonly></textarea>
+      <div class="ctaRow">
+        <button class="btn" type="button" id="copyElig" aria-label="Copy TWOC eligibility documentation snippet">Copy snippet</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================= TWOC OUTCOME TAB ========================= -->
+  <div id="twoc" class="section">
+
+    <div class="card">
+      <h3>TWOC outcome assessment</h3>
+
+      <label>
+        Hours since catheter removal
+        <input type="number" id="hrsPost" min="0" step="0.5" placeholder="e.g. 4" />
+      </label>
+
+      <label>
+        Voided?
+        <select id="voided">
+          <option value="unknown">Unknown</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </label>
+
+      <label>
+        <input type="checkbox" id="sym2" />
+        Significant discomfort/distress
+      </label>
+
+      <label>
+        <span id="pvr2Label">Bladder scan volume / PVR (mL)</span>
+        <input type="number" id="pvr2" min="0" step="1" placeholder="e.g. 300" />
+      </label>
+
+      <div class="ctaRow">
+        <button class="btn" type="button" id="resetTwoc">Reset this tab</button>
+      </div>
+    </div>
+
+    <div class="card" role="status" aria-live="polite">
+      <h3>TWOC outcome – interpretation & action</h3>
+      <span id="twocBadge" class="badge b-amber">REASSESS</span>
+      <p id="twocTitle" style="font-weight:900; margin:10px 0 6px 0;">—</p>
+
+      <div class="mutedHead">Rationale</div>
+      <ul id="twocWhy"></ul>
+
+      <div class="mutedHead" style="margin-top:10px;">Actions</div>
+      <ul id="twocAct"></ul>
+
+      <div class="audit" id="twocAudit"></div>
+
+      <hr />
+
+      <h4 style="margin:0 0 8px 0;">Copy-paste documentation snippet</h4>
+      <textarea class="snip" id="twocSnippet" readonly></textarea>
+      <div class="ctaRow">
+        <button class="btn" type="button" id="copyTwoc" aria-label="Copy TWOC outcome documentation snippet">Copy snippet</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>Evidence sources and references (collapsible)</summary>
+      <div style="margin-top:12px; font-size:0.85rem; line-height:1.55; color:#374151;">
+        <ol>
+          <li>Stoffel JT, Peterson AC, Sandhu JS, Suskind AM, Wei JT, Lightner DJ. <i>Urinary Retention in Adults: Evaluation and Initial Management.</i> JAMA. 2018;320(18):1917–1928.</li>
+          <li>Baldini G, Bagry H, Aprikian A, Carli F. <i>Postoperative Urinary Retention: Anesthetic and Perioperative Considerations.</i> Anesthesiology. 2009;110(5):1139–1157.</li>
+          <li>Verhamme KMC, Sturkenboom MCJM, Stricker BHC, Bosch JLHR. <i>Drug-induced urinary retention: incidence, management and prevention.</i> Drug Saf. 2008.</li>
+          <li>Abbey J, Piller N, De Bellis A, et al. <i>The Abbey Pain Scale: a 1-minute numerical indicator for people with end-stage dementia.</i> Int J Palliat Nurs. 2004.</li>
+          <li>NICE. <i>Delirium: prevention, diagnosis and management.</i> NICE guideline NG103.</li>
+          <li>European Association of Urology (EAU). <i>EAU Guidelines</i> (relevant LUTS/retention sections; consult current edition locally).</li>
+        </ol>
+      </div>
+    </details>
+  </div>
+
+  <div class="foot">
+    © 2026 Dr Prabhath Fernando MBBS MD FRCP.<br/>
+    Catheter management in femoral/pelvic fracture patients — nursing decision support tool.<br/>
+    This tool may be used for clinical care and education but may not be modified, redistributed, or incorporated into commercial products without permission.<br/>
+    Use alongside local policy and clinical judgement.
+  </div>
+</div>
+
+<script>
+(function(){
+  function $(id){ return document.getElementById(id); }
+
+  function safeNum(id){
+    var el = $(id); if(!el) return null;
+    var v = el.value;
+    if(v === "" || v === null || typeof v === "undefined") return null;
+    var n = Number(v);
+    if(!isFinite(n) || n < 0) return null;
+    return n;
+  }
+
+  function chk(id){
+    var el = $(id);
+    return !!(el && el.checked);
+  }
+
+  function sel(id){
+    var el = $(id);
+    return el ? el.value : "unknown";
+  }
+
+  function setHTMLList(el, arr){
+    el.innerHTML = arr.map(function(x){ return "<li>" + x + "</li>"; }).join("");
+  }
+
+  function setBadge(el, text, cls){
+    el.textContent = text;
+    el.className = "badge " + cls;
+  }
+
+  function copyWithFeedback(btn, text){
+    if(navigator && navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text);
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try{ document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta);
+    }
+
+    var original = btn.textContent;
+    btn.textContent = "✓ Copied";
+    btn.classList.add("copied");
+
+    setTimeout(function(){
+      btn.textContent = original;
+      btn.classList.remove("copied");
+    }, 1400);
+  }
+
+  function rapidScreenState(){
+    return {
+      delir: sel("rsDelir"),
+      pain: sel("rsPain"),
+      able: sel("rsAble"),
+      abbey: safeNum("abbey")
+    };
+  }
+
+  function updateRapidAndContext(rs){
+    var lines = [];
+    var acts = [];
+
+    if(rs.delir === "yes"){
+      lines.push("Rapid screen suggests <b>delirium/new confusion</b>.");
+      acts.push("Assess delirium and look for reversible causes.");
+      acts.push("Urinary retention may contribute to delirium/agitation but is not specific.");
+    } else if(rs.delir === "unknown"){
+      lines.push("Delirium status is <b>uncertain</b>.");
+      acts.push("Clarify delirium status and treat reversible causes.");
+    }
+
+    if(rs.pain === "yes"){
+      var abb = (rs.abbey !== null) ? (" Abbey=" + rs.abbey + ".") : "";
+      lines.push("Patient is <b>in pain or appears in pain</b>." + abb);
+      acts.push("Treat pain and reassess.");
+    } else if(rs.pain === "unknown"){
+      lines.push("Pain status is <b>uncertain</b>.");
+      acts.push("Assess/treat pain pragmatically and reassess.");
+    }
+
+    if(rs.able === "no"){
+      acts.push("Patient may be unable to reliably report urinary symptoms: rely more on observed signs, timing, and bladder scan.");
+    } else if(rs.able === "unknown"){
+      acts.push("If ability to report is unclear, err toward objective assessment where indicated.");
+    }
+
+    // Always visible recommendation block; if no issues, keep it simple
+    if(rs.delir === "no" && rs.pain === "no"){
+      $("rsImmediateText").innerHTML = "No pain/delirium trigger identified. Proceed with bladder assessment.";
+      setHTMLList($("rsImmediateActs"), [
+        "Use timing, observed signs, and bladder scan volume to guide the decision.",
+        "If a bladder scan/PVR is already available, interpret that volume immediately."
+      ]);
+      $("contextBanner").className = "contextBanner blue";
+      $("contextTitle").textContent = "Standard bladder assessment";
+      $("contextText").textContent = "No pain/delirium trigger identified. Proceed with the bladder assessment pathway below.";
+    } else {
+      acts.push("If retention risk is present, perform a bladder scan and follow the pathway below. If a scan/PVR is already available, interpret the volume using the pathway below.");
+      $("rsImmediateText").innerHTML = lines.join(" ");
+      setHTMLList($("rsImmediateActs"), acts);
+      $("contextBanner").className = "contextBanner amber";
+      $("contextTitle").textContent = "Bladder assessment in pain and/or delirium";
+      $("contextText").textContent = "Pain and delirium may be caused by urinary retention, contribute to retention, or coexist with it. Do not delay bladder assessment if retention risk is present.";
+    }
+  }
+
+  function updateCat(){
+    var rs = rapidScreenState();
+    updateRapidAndContext(rs);
+
+    // Bladder assessment is ALWAYS available. Rapid screen changes context, not access.
+    $("catAlgoWrap").style.display = "block";
+
+    var sex = sel("sex");
+    var signs = chk("signs");
+    var hrs = safeNum("hrs");
+    var unk = chk("unk");
+    var pvr = safeNum("pvr");
+    var aki = chk("aki"), hyd = chk("hyd"), rise = chk("rise");
+
+    var badge="REASSESS", bcls="b-amber", title="—", why=[], act=[];
+
+    // Two-stage logic:
+    // 1) override
+    // 2) if scan exists -> interpret volume immediately
+    // 3) if no scan -> decide whether scan is needed
+
+    if(aki || hyd || rise){
+      badge="SENIOR REVIEW — OVERRIDE POSSIBLE";
+      bcls="b-amber";
+      title="Overriding indication present";
+      var o = [];
+      if(aki) o.push("AKI/rising creatinine");
+      if(hyd) o.push("hydronephrosis");
+      if(rise) o.push("rapidly rising volumes");
+      why.push("Override flag(s): " + o.join(", ") + ".");
+      why.push("Thresholds may be overridden only with senior review.");
+      act.push("Discuss with a senior doctor/practitioner; if no scan is available, perform a bladder scan and document findings.");
+    } else if(pvr !== null){
+      // Interpret known scan FIRST, regardless of time
+      if(signs){
+        if(pvr >= 300){
+          badge="CATHETERISE";
+          bcls="b-amber";
+          title="Signs suggest retention + volume ≥300 mL";
+          why.push("Observed signs suggesting retention with PVR ≥300 mL.");
+          act.push("Catheterise per local policy; document rationale and plan daily review/TWOC when eligible.");
+        } else {
+          badge="DO NOT CATHETERISE";
+          bcls="b-amber";
+          title="Signs present but volume <300 mL";
+          why.push("PVR <300 mL: do not attribute signs solely to retention without supportive volume.");
+          act.push("Treat/review other contributors and reassess.");
+          act.push("Repeat scan if signs persist/worsen.");
+        }
+      } else {
+        if(sex === "female"){
+          if(pvr >= 600){
+            badge="CATHETERISE";
+            bcls="b-amber";
+            title="Female, asymptomatic volume ≥600 mL";
+            why.push("Female pragmatic asymptomatic threshold reached (≥600 mL).");
+            act.push("Catheterise per local policy; document volume and plan daily review/TWOC when eligible.");
+          } else if(pvr >= 400){
+            badge="OBSERVE / RESCAN";
+            bcls="b-amber";
+            title="Female, asymptomatic volume 400–599 mL";
+            why.push("Female observation zone: avoid unnecessary catheterisation while preventing over-distension.");
+            act.push("Encourage toileting; repeat scan after observation interval or sooner if signs develop.");
+          } else {
+            badge="NO CATHETER";
+            bcls="b-amber";
+            title="Female, asymptomatic volume <400 mL";
+            why.push("No catheterisation indicated by pragmatic female threshold in this tool.");
+            act.push("Continue monitoring; rescan if clinical concern develops.");
+          }
+        } else {
+          // male or unknown -> safer male-style threshold
+          if(pvr >= 500){
+            badge="CATHETERISE";
+            bcls="b-amber";
+            title="Male/unknown sex, asymptomatic volume ≥500 mL";
+            why.push("Male/unknown pragmatic asymptomatic threshold reached (≥500 mL).");
+            act.push("Catheterise per local policy; document volume and plan daily review/TWOC when eligible.");
+          } else if(pvr >= 300){
+            badge="OBSERVE / RESCAN";
+            bcls="b-amber";
+            title="Male/unknown sex, asymptomatic volume 300–499 mL";
+            why.push("Observation zone: avoid unnecessary catheterisation while preventing over-distension.");
+            act.push("Encourage toileting; repeat scan after observation interval or sooner if signs develop.");
+          } else {
+            badge="NO CATHETER";
+            bcls="b-amber";
+            title="Male/unknown sex, asymptomatic volume <300 mL";
+            why.push("No catheterisation indicated by pragmatic threshold in this tool.");
+            act.push("Continue monitoring; rescan if clinical concern develops.");
+          }
+        }
+      }
+    } else {
+      // No scan yet: decide whether a scan is needed
+      var scanNeeded =
+        signs ||
+        unk ||
+        (hrs !== null && hrs >= 6) ||
+        (rs.delir !== "no") ||
+        (rs.pain !== "no") ||
+        (rs.able !== "yes");
+
+      if(scanNeeded){
+        badge="BLADDER SCAN REQUIRED";
+        bcls="b-amber";
+        title="Objective volume required";
+        why.push("Retention risk is present but no bladder scan/PVR has been entered.");
+        act.push("Perform a bladder scan and enter the volume.");
+      } else {
+        badge="REASSESS";
+        bcls="b-amber";
+        title="No current indication for scan/catheter";
+        why.push("No signs suggesting retention, no scan available, and no timing/history trigger identified.");
+        act.push("Encourage toileting/commode and reassess.");
+      }
+    }
+
+    setBadge($("catBadge"), badge, bcls);
+    $("catTitle").textContent = title;
+    setHTMLList($("catWhy"), why);
+    $("catAct").innerHTML = act.map(function(x){ return "<li>"+x+"</li>"; }).join("");
+
+    $("catAudit").textContent =
+      "Audit: rapid delirium=" + rs.delir +
+      "; pain=" + rs.pain +
+      "; able to report=" + rs.able +
+      (rs.abbey!==null ? ("; Abbey=" + rs.abbey) : "") +
+      "; sex=" + sex +
+      "; signs suggest retention=" + (signs?"Yes":"No") +
+      "; hrs since last urine=" + (hrs===null?"—":hrs) +
+      "; time unknown=" + (unk?"Yes":"No") +
+      "; PVR=" + (pvr===null?"—":pvr) +
+      "; override=" + ((aki||hyd||rise)?"Yes":"No") + ".";
+
+    // Snippet: cleaner structure, no safety warning block copied
+    var pathway = (rs.delir === "no" && rs.pain === "no") ? "standard pathway" : "pain/delirium pathway";
+
+    var sn=[];
+    sn.push("Urinary retention assessment (" + pathway + ")");
+    sn.push("");
+    sn.push("Recommendation");
+    sn.push(badge + " — " + title);
+    sn.push("");
+    sn.push("Key findings");
+    sn.push("Delirium/confused/agitated: " + rs.delir);
+    sn.push("Pain present/appears in pain: " + rs.pain + (rs.abbey!==null ? (" (Abbey " + rs.abbey + ")") : ""));
+    sn.push("Able to report urinary symptoms: " + rs.able);
+    sn.push("Sex: " + sex);
+    sn.push("Signs suggest retention: " + (signs?"Yes":"No"));
+    sn.push("Hours since last urine: " + (hrs===null?"—":hrs));
+    sn.push("Time unknown: " + (unk?"Yes":"No"));
+    sn.push("Bladder scan/PVR: " + (pvr===null?"—":pvr) + " mL");
+    if(aki||hyd||rise){
+      var o2=[];
+      if(aki) o2.push("AKI/rising creatinine");
+      if(hyd) o2.push("Hydronephrosis");
+      if(rise) o2.push("Rapidly rising volumes");
+      sn.push("Override flags: " + o2.join(", "));
+    }
+    sn.push("");
+    sn.push("Plan");
+    act.forEach(function(x){ sn.push("- " + x.replace(/<[^>]+>/g, "")); });
+    $("catSnippet").value = sn.join("\n");
+  }
+
+  function updateElig(){
+    var elig = chk("e1") && chk("e2") && chk("e3") && chk("e4") && chk("e5") && chk("e6");
+    setBadge($("eligBadge"), elig ? "ELIGIBLE" : "NOT ELIGIBLE", elig ? "b-green" : "b-amber");
+    $("eligText").textContent = elig
+      ? "All eligibility criteria met — proceed to TWOC."
+      : "One or more eligibility criteria missing — address before TWOC where feasible.";
+
+    var sn=[];
+    sn.push("TWOC eligibility (peri-op fracture tool)");
+    sn.push("");
+    sn.push("Recommendation");
+    sn.push(elig ? "ELIGIBLE" : "NOT ELIGIBLE");
+    sn.push("");
+    sn.push("Checklist");
+    sn.push("Haemodynamically stable: " + (chk("e1")?"Yes":"No"));
+    sn.push("No strict hourly urine output required: " + (chk("e2")?"Yes":"No"));
+    sn.push("Pain controlled: " + (chk("e3")?"Yes":"No"));
+    sn.push("Constipation assessed/managed: " + (chk("e4")?"Yes":"No"));
+    sn.push("Transfers/mobility available: " + (chk("e5")?"Yes":"No"));
+    sn.push("Daytime staffing + scanner available: " + (chk("e6")?"Yes":"No"));
+    $("eligSnippet").value = sn.join("\n");
+  }
+
+  function updateTwoc(){
+    var hrsPost = safeNum("hrsPost");
+    var voided = sel("voided");
+    var sym2 = chk("sym2");
+    var pvr2 = safeNum("pvr2");
+
+    $("pvr2Label").textContent = (voided === "yes") ? "Post-void residual (mL)" : "Bladder scan volume (mL)";
+
+    var badge="REASSESS", bcls="b-amber", title="—", why=[], act=[];
+
+    if((voided === "unknown" || (voided === "no" && hrsPost !== null && hrsPost >= 6)) && pvr2 === null){
+      badge="BLADDER SCAN REQUIRED";
+      bcls="b-amber";
+      title="Objective volume needed";
+      why.push("If no void by 6 hours (or status unknown), bladder scan is required.");
+      act.push("Perform bladder scan and enter volume.");
+    } else {
+      var failHighResidual = (pvr2 !== null && pvr2 >= 300);
+      var failSymptomaticResidual = (voided === "yes" && sym2 && pvr2 !== null && pvr2 >= 200);
+
+      if(failHighResidual || failSymptomaticResidual){
+        badge="TWOC UNSUCCESSFUL";
+        bcls="b-red";
+        title="TWOC considered unsuccessful";
+        if(failHighResidual) why.push("High residual/scan volume ≥300 mL.");
+        if(failSymptomaticResidual) why.push("Symptomatic residual ≥200 mL after voiding.");
+        act.push("Drain bladder / re-catheterise per local policy.");
+        act.push("Seek senior doctor/practitioner or urology review if recurrent failure.");
+      } else if(voided === "yes" && pvr2 !== null && pvr2 < 200){
+        badge="TWOC SUCCESSFUL";
+        bcls="b-green";
+        title="TWOC successful";
+        why.push("Voided with PVR <200 mL.");
+        act.push("Continue observation; rescan only if symptoms recur or concerns arise.");
+      } else {
+        badge="CONTINUE OBSERVATION";
+        bcls="b-amber";
+        title="Continue observation";
+        why.push("No clear failure criteria met yet.");
+        act.push("If no void by 6 hours or status becomes unclear, scan and apply thresholds.");
+      }
+    }
+
+    setBadge($("twocBadge"), badge, bcls);
+    $("twocTitle").textContent = title;
+    setHTMLList($("twocWhy"), why);
+    $("twocAct").innerHTML = act.map(function(x){ return "<li>"+x+"</li>"; }).join("");
+
+    $("twocAudit").textContent =
+      "Audit: hrs since removal=" + (hrsPost===null?"—":hrsPost) +
+      "; voided=" + voided +
+      "; discomfort/distress=" + (sym2?"Yes":"No") +
+      "; " + (voided==="yes" ? "PVR=" : "scan volume=") + (pvr2===null?"—":pvr2) + ".";
+
+    var sn=[];
+    sn.push("TWOC outcome (peri-op fracture tool)");
+    sn.push("");
+    sn.push("Recommendation");
+    sn.push(badge + " — " + title);
+    sn.push("");
+    sn.push("Key findings");
+    sn.push("Hours since catheter removal: " + (hrsPost===null?"—":hrsPost));
+    sn.push("Voided: " + voided);
+    sn.push("Significant discomfort/distress: " + (sym2?"Yes":"No"));
+    sn.push((voided==="yes" ? "Post-void residual" : "Bladder scan volume") + ": " + (pvr2===null?"—":pvr2) + " mL");
+    if(badge === "TWOC UNSUCCESSFUL"){
+      sn.push("");
+      sn.push("Clinical interpretation");
+      sn.push("This TWOC is considered unsuccessful.");
+    }
+    sn.push("");
+    sn.push("Plan");
+    act.forEach(function(x){ sn.push("- " + x); });
+    $("twocSnippet").value = sn.join("\n");
+  }
+
+  function updateAll(){
+    updateCat();
+    updateElig();
+    updateTwoc();
+  }
+
+  function activate(targetId){
+    document.querySelectorAll(".section").forEach(function(s){ s.classList.remove("active"); });
+    document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
+    $(targetId).classList.add("active");
+    document.querySelector('.tab[data-target="'+targetId+'"]').classList.add("active");
+    window.scrollTo({top:0, behavior:"auto"});
+  }
+
+  document.querySelectorAll(".tab").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      activate(this.getAttribute("data-target"));
+    });
+  });
+
+  $("copyCat").addEventListener("click", function(){ copyWithFeedback(this, $("catSnippet").value); });
+  $("copyElig").addEventListener("click", function(){ copyWithFeedback(this, $("eligSnippet").value); });
+  $("copyTwoc").addEventListener("click", function(){ copyWithFeedback(this, $("twocSnippet").value); });
+
+  $("resetCat").addEventListener("click", function(){
+    $("rsDelir").value="unknown";
+    $("rsPain").value="unknown";
+    $("rsAble").value="unknown";
+    $("abbey").value="";
+    $("sex").value="unknown";
+    $("signs").checked=false;
+    $("hrs").value="";
+    $("unk").checked=false;
+    $("pvr").value="";
+    $("aki").checked=false;
+    $("hyd").checked=false;
+    $("rise").checked=false;
+    updateAll();
+  });
+
+  $("resetElig").addEventListener("click", function(){
+    ["e1","e2","e3","e4","e5","e6"].forEach(function(id){ $(id).checked=false; });
+    updateAll();
+  });
+
+  $("resetTwoc").addEventListener("click", function(){
+    $("hrsPost").value="";
+    $("voided").value="unknown";
+    $("sym2").checked=false;
+    $("pvr2").value="";
+    updateAll();
+  });
+
+  document.addEventListener("input", updateAll);
+  document.addEventListener("change", updateAll);
+
+  updateAll();
+})();
+</script>
+</body>
+</html>
